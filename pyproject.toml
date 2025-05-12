@@ -1,0 +1,76 @@
+[project]
+name = "zego-challenge"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Samir Azzouz",email = "s.azzouz97@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "zego-challenge"
+version = "0.1.0"
+description = ""
+authors = ["Samir Azzouz <s.azzouz97@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.12"
+httpx = "^0.27.0"
+beautifulsoup4 = "^4.12.3"
+typer = {extras = ["all"], version = "^0.12.3"}
+pytest-random-order = "^1.1.1"
+typeguard = "^4.4.2"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.11.8"
+pytest = "^8.3.5"
+pytest-asyncio = "^0.23.7"
+pytest-cov = "^6.1.1"
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+extend-select = [
+  "E501",
+  "UP",  # pyupgrade
+  ]
+extend-ignore = []
+
+[tool.ruff.lint.extend-per-file-ignores]
+"__init__.py" = ["F401","E501"]
+
+[tool.pytest.ini_options]
+python_files = ["tests.py", "test_*.py", "*_tests.py"]
+addopts = [
+  "--random-order"
+]
+markers = [
+  "slow: marks tests as slow",
+  "serial: marks tests as serial",
+  "enable_signals: marks tests to run with signal enabled",
+]
+
+[tool.coverage.run]
+source = ["crawler_app"]
+omit = ["*/__init__.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "pass",
+    "raise ImportError",
+]
+fail_under = 80
+show_missing = true
