@@ -1,7 +1,7 @@
 import logging
 from urllib.parse import quote, urljoin, urlparse
 
-from httpx import AsyncClient, RequestError, TimeoutException
+import httpx
 from typeguard import typechecked
 
 from .constants import DEFAULT_HEADERS, DEFAULT_TIMEOUT, HTTP_SUCCESS_CODE_DESCRIPTIONS, HTTP_SUPPORTED_SUCCESS_CODES
@@ -39,7 +39,7 @@ async def fetch_page(url: str, timeout: float = DEFAULT_TIMEOUT) -> tuple[str, s
     """
     try:
         # Create a configured HTTP client with proper headers, timeout, and redirect handling
-        async with AsyncClient(headers=DEFAULT_HEADERS, timeout=timeout, follow_redirects=True) as client:
+        async with httpx.AsyncClient(headers=DEFAULT_HEADERS, timeout=timeout, follow_redirects=True) as client:
             try:
                 # Make the HTTP request
                 response = await client.get(url)
@@ -72,7 +72,7 @@ async def fetch_page(url: str, timeout: float = DEFAULT_TIMEOUT) -> tuple[str, s
                 logger.debug(f"Successfully fetched HTML content from {url}")
                 return url, response.text
 
-            except (TimeoutException, RequestError) as e:
+            except (httpx.TimeoutException, httpx.RequestError) as e:
                 logger.warning(f"Request error while fetching {url}: {str(e)}")
                 return url, None
 

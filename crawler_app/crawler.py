@@ -87,6 +87,7 @@ class Crawler:
         self.base_url = normalize_url(base_url, base_url)
         self.base_domain_netloc = get_domain_netloc(self.base_url)
 
+        # Handle invalid base URL
         if not self.base_domain_netloc:
             raise InvalidURLError(f"Invalid base URL: '{base_url}'. The URL could not be parsed correctly.")
 
