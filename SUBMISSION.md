@@ -20,7 +20,7 @@ This project implements a performant web crawler designed to efficiently travers
 
 ## 2. Solution Overview
 
-The solution is a Python CLI application built with a modular architecture to ensure strong maintainability and testability. The project structure emphasises separation of concerns and follows object-oriented programming principles.
+The solution is a Python CLI-based web crawler designed with a modular, object-oriented architecture for maintainability and testability. It leverages asynchronous programming to enable high concurrency, supporting efficient parallel crawling for a single domain.
 
 ### Project Structure
 
@@ -164,8 +164,6 @@ The crawler implements robust error handling through custom exceptions, graceful
 - **Domain Boundary**: Correctly identifies same-domain URLs with port and protocol variations
 - **Graceful Error Recovery**: Continues processing despite network errors or malformed HTML
 - **Resource Management**: Controls memory usage through queue management and efficient data structures
-- **URL Variations**: Handling URLs with/without trailing slashes, fragments, query parameters
-- **Malformed HTML**: Robust parsing of incomplete or non-standard HTML
 - **Redirect Chains**: Following redirects while maintaining domain boundaries
 
 ### Progress Reporting
@@ -205,8 +203,7 @@ AI tools like ChatGPT and Grok were instrumental in rapidly synthesizing complex
 
 - Web crawling architectures
 - Concurrent programming techniques, such as leveraging the 'Semaphore' for constraining concurrency
-- Python asynchronous development strategies
-- Performance optimization for network-intensive applications
+- Python asynchronous development strategies and their suitability for network-intensive applications (i.e. highly I/O bound)
 
 This research phase provided a structured approach to understanding the technical challenges and potential solution strategies before writing a single line of code.
 
@@ -217,11 +214,11 @@ After implementing the raw baseline solution, AI tools (Cursor IDE with Claude 3
 - Generated comprehensive test cases and identified exhaustive edge case scenarios
 - Supported progressive code refinement and high test coverage
 - Helped refine algorithms to be as lean and DRY as possible whilst maintaining readibility and modularity
-- Helped maintain high-quality and comprehensive code documentation through comments for improving readability fellow engineers
+- Helped maintain high-quality and comprehensive code documentation through comments for improving readability for fellow engineers
 
 #### Scaffolding Boilerplate
 
-Leveraged AI to speed up development when implementing generic boilerplate code which is still essential for the solution. For example, it was used to rapidly implement the CLI application to achieve the desired UX whilst making iterative improvements to ensure compatability with async data processing, allowing us to see logs during the process across all workers. In time-constrained scenarios such as this, this proves invaluable to allow more time to be spent on the real business logic.
+Leveraged AI to speed up development when implementing generic boilerplate code which is still essential for the solution, althought not essential to the business logic. For example, it was used to rapidly implement the CLI application to achieve the desired UX whilst making iterative improvements to ensure compatability with async data processing, allowing us to see logs during the crawling process across all workers. In time-constrained scenarios such as this, this proves invaluable to allow more time to be spent on the real business logic.
 
 ## 6. Testing Strategy
 
@@ -356,7 +353,7 @@ For handling larger crawling tasks, such as multi-domain:
 Other approaches that could be considered for evolving the solution into something more production ready:
 
 - **Distributed Architecture**: Implementing a distributed design would enable large-scale crawling across multiple machines.
-- **API Interface**: Adding a RESTful API would make the crawler serviceable to other applications.
+- **API Interface**: Adding a RESTful API would make the crawler serviceable to other applications. There is lose coupling with the CLI and crawler engine, meaning it would be straightforward to extract this and wrap it with a lightweight webserver, like FastAPi, if needed.
 - **Persistent Storage**: Integrating database storage would allow for incremental crawling and result preservation, as well as result exploration.
 
 (Assuming we wouldn't be making use of existing production-scale crawling frameworks)
